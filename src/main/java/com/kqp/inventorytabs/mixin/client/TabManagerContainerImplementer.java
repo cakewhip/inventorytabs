@@ -10,12 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Environment(EnvType.CLIENT)
 @Mixin(MinecraftClient.class)
 public class TabManagerContainerImplementer implements TabManagerContainer {
-    private TabManager tabManager;
-
-    @Override
-    public void setTabManager(TabManager tabManager) {
-        this.tabManager = tabManager;
-    }
+    private TabManager tabManager = new TabManager();
 
     @Override
     public TabManager getTabManager() {

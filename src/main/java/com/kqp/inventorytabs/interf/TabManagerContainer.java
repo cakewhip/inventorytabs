@@ -10,7 +10,5 @@ import net.fabricmc.api.Environment;
  */
 @Environment(EnvType.CLIENT)
 public interface TabManagerContainer {
-    void setTabManager(TabManager tabManager);
-
     TabManager getTabManager();
 }

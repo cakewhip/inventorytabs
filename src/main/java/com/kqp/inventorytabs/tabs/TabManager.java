@@ -26,7 +26,6 @@ import java.util.List;
  */
 @Environment(EnvType.CLIENT)
 public class TabManager {
-    public final ClientPlayerEntity player;
     public final List<Tab> tabs;
     public Tab currentTab;
 
@@ -36,24 +35,18 @@ public class TabManager {
 
     public final TabRenderer tabRenderer;
 
-    public TabManager(ClientPlayerEntity player) {
-        this.player = player;
+    public TabManager() {
         this.tabs = new ArrayList();
-
         this.tabRenderer = new TabRenderer(this);
-    }
 
-    public void init() {
         tabs.add(new PlayerTab());
-
-        refreshAvailableTabs();
     }
 
     public void update() {
         refreshAvailableTabs();
 
         for (int i = 0; i < tabs.size(); i++) {
-            if (tabs.get(i).shouldBeRemoved(player)) {
+            if (tabs.get(i).shouldBeRemoved(MinecraftClient.getInstance().player)) {
                 tabs.remove(i);
                 i--;
             }
@@ -66,7 +59,7 @@ public class TabManager {
 
     private void refreshAvailableTabs() {
         TabProviderRegistry.getTabProviders().forEach(tabProvider -> {
-            tabProvider.addAvailableTabs(player, tabs);
+            tabProvider.addAvailableTabs(MinecraftClient.getInstance().player, tabs);
         });
     }
 
@@ -141,7 +134,7 @@ public class TabManager {
 
         onOpenTab(tab);
 
-        tab.open(player);
+        tab.open(MinecraftClient.getInstance().player);
     }
 
     public void onOpenTab(Tab tab) {
