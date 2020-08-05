@@ -36,4 +36,9 @@ public class PlayerTab implements Tab {
     public String toString() {
         return "PLAYER INVENTORY TAB";
     }
+
+    @Override
+    public int getPriority() {
+        return 100;
+    }
 }

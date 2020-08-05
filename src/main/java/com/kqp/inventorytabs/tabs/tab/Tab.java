@@ -40,4 +40,14 @@ public interface Tab {
      * @return
      */
     StringRenderable getHoverText();
+
+    /**
+     * Returns the tab's priority when being displayed.
+     * The player's inventory is at 100.
+     *
+     * @return
+     */
+    default int getPriority() {
+        return 0;
+    }
 }

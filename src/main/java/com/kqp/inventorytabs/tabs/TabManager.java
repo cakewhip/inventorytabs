@@ -12,17 +12,16 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundEvents;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Manages everything related to tabs.
- *
  */
 @Environment(EnvType.CLIENT)
 public class TabManager {
@@ -51,6 +50,11 @@ public class TabManager {
                 i--;
             }
         }
+
+        tabs.sort(Comparator
+                .comparing(Tab::getPriority).reversed()
+                .thenComparing(tab -> tab.getHoverText().getString())
+        );
     }
 
     public void setCurrentTab(Tab tab) {
