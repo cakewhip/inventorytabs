@@ -31,6 +31,7 @@ public class VanillaBlockTabProvider extends GenericBlockTabProvider {
         blocks.add(Blocks.BARREL);
         blocks.add(Blocks.BLAST_FURNACE);
         blocks.add(Blocks.SMOKER);
+        blocks.add(Blocks.BREWING_STAND);
 
         Registry.BLOCK.forEach(block -> {
             if (block instanceof ShulkerBoxBlock) {
