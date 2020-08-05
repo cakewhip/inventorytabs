@@ -1,3 +1,3 @@
-# EZPaS...
+# InventoryTabs
 
-stands for EZ Pipes and Stuff. Adds ez pipes and stuff.
+Adds tabs to access nearby blocks.
