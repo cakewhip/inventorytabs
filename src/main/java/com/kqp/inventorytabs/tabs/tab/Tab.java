@@ -13,19 +13,16 @@ import net.minecraft.text.StringRenderable;
 public interface Tab {
     /**
      * Fires whenever the tab is clicked.
-     *
-     * @param player
      */
-    void open(ClientPlayerEntity player);
+    void open();
 
     /**
      * Returns true if the tab should stop being displayed.
      * Should be synced up with the provider that provides this tab.
      *
-     * @param player
      * @return
      */
-    boolean shouldBeRemoved(ClientPlayerEntity player);
+    boolean shouldBeRemoved();
 
     /**
      * Returns the item stack that shows in the tab.
@@ -40,6 +37,12 @@ public interface Tab {
      * @return
      */
     StringRenderable getHoverText();
+
+    /**
+     * Called when the screen associated with the tab is closed.
+     */
+    default void onClose() {
+    }
 
     /**
      * Returns the tab's priority when being displayed.

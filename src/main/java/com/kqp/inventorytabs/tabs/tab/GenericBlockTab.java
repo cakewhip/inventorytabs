@@ -34,14 +34,15 @@ public class GenericBlockTab implements Tab {
     }
 
     @Override
-    public void open(ClientPlayerEntity player) {
+    public void open() {
+        MinecraftClient client = MinecraftClient.getInstance();
         BlockHitResult hitResult = null;
 
         if (InventoryTabs.getConfig().doSightChecks()) {
-            hitResult = BlockUtil.getLineOfSight(blockPos, player, 5D);
+            hitResult = BlockUtil.getLineOfSight(blockPos, client.player, 5D);
         } else {
             hitResult = new BlockHitResult(
-                    player.getPos(),
+                    client.player.getPos(),
                     Direction.EAST,
                     blockPos,
                     false
@@ -49,15 +50,17 @@ public class GenericBlockTab implements Tab {
         }
 
         MinecraftClient.getInstance().interactionManager.interactBlock(
-                player,
-                player.clientWorld,
+                client.player,
+                client.player.clientWorld,
                 Hand.MAIN_HAND,
                 hitResult
         );
     }
 
     @Override
-    public boolean shouldBeRemoved(ClientPlayerEntity player) {
+    public boolean shouldBeRemoved() {
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+
         if (player.world.getBlockState(blockPos).getBlock() != block) {
             return true;
         }

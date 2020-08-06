@@ -13,12 +13,13 @@ import net.minecraft.text.StringRenderable;
  */
 public class PlayerInventoryTab implements Tab {
     @Override
-    public void open(ClientPlayerEntity player) {
-        MinecraftClient.getInstance().openScreen(new InventoryScreen(player));
+    public void open() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        client.openScreen(new InventoryScreen(client.player));
     }
 
     @Override
-    public boolean shouldBeRemoved(ClientPlayerEntity player) {
+    public boolean shouldBeRemoved() {
         return false;
     }
 

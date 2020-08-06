@@ -6,6 +6,7 @@ import com.kqp.inventorytabs.interf.TabManagerContainer;
 import com.kqp.inventorytabs.mixin.client.accessor.HandledScreenAccessor;
 import com.kqp.inventorytabs.tabs.render.TabRenderInfo;
 import com.kqp.inventorytabs.tabs.render.TabRenderer;
+import com.kqp.inventorytabs.tabs.tab.PlayerInventoryTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.MouseUtil;
 import net.fabricmc.api.EnvType;
@@ -14,6 +15,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.network.packet.c2s.play.GuiCloseC2SPacket;
 import net.minecraft.sound.SoundEvents;
 import org.lwjgl.glfw.GLFW;
 
@@ -59,7 +61,7 @@ public class TabManager {
 
         // Remove old ones
         for (int i = 0; i < tabs.size(); i++) {
-            if (tabs.get(i).shouldBeRemoved(MinecraftClient.getInstance().player)) {
+            if (tabs.get(i).shouldBeRemoved()) {
                 tabs.remove(i);
                 i--;
             }
@@ -160,16 +162,30 @@ public class TabManager {
     }
 
     public void onTabClick(Tab tab) {
+        // Push current mouse position
+        // This is to persist mouse position across screens
         MouseUtil.push();
 
+        // Set tab open flag
         tabOpenedRecently = true;
 
-        onOpenTab(tab);
+        // Close any handled screens
+        // This fixes the inventory desync issue
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player.currentScreenHandler != null) {
+            client.getNetworkHandler().sendPacket(new GuiCloseC2SPacket(client.player.currentScreenHandler.syncId));
+        }
 
-        tab.open(MinecraftClient.getInstance().player);
+        // Open new tab
+        onOpenTab(tab);
+        tab.open();
     }
 
     public void onOpenTab(Tab tab) {
+        if (currentTab != null && currentTab != tab) {
+            currentTab.onClose();
+        }
+
         setCurrentTab(tab);
         setCurrentPage(pageOf(tab));
     }
