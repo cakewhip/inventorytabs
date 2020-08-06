@@ -14,8 +14,6 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.awt.*;
@@ -94,8 +92,8 @@ public class TabRenderer {
         int y = oY - 16;
         boolean hovered = new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT).contains(mouseX, mouseY);
         int u = 0;
-        u += tabManager.canGoBack() && hovered ? BUTTON_WIDTH * 2 : 0;
-        int v = tabManager.canGoBack() ? 0 : 13;
+        u += tabManager.canGoBackAPage() && hovered ? BUTTON_WIDTH * 2 : 0;
+        int v = tabManager.canGoBackAPage() ? 0 : 13;
         currentScreen.drawTexture(
                 matrices,
                 x,
@@ -111,8 +109,8 @@ public class TabRenderer {
         y = oY - 16;
         hovered = new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT).contains(mouseX, mouseY);
         u = 15;
-        u += tabManager.canGoForward() && hovered ? BUTTON_WIDTH * 2 : 0;
-        v = tabManager.canGoForward() ? 0 : 13;
+        u += tabManager.canGoForwardAPage() && hovered ? BUTTON_WIDTH * 2 : 0;
+        v = tabManager.canGoForwardAPage() ? 0 : 13;
         currentScreen.drawTexture(
                 matrices,
                 x,

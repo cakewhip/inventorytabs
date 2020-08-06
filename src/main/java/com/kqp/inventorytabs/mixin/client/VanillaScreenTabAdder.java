@@ -110,6 +110,21 @@ public class VanillaScreenTabAdder {
         }
     }
 
+    @Inject(
+            method = "keyPressed",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> callbackInfo) {
+        if (screenSupported()) {
+            TabManager tabManager = ((TabManagerContainer) MinecraftClient.getInstance()).getTabManager();
+
+            if (tabManager.keyPressed(keyCode, scanCode, modifiers)) {
+                callbackInfo.setReturnValue(true);
+            }
+        }
+    }
+
     private boolean screenSupported() {
         HandledScreen screen = (HandledScreen) (Object) this;
 

@@ -1,11 +1,11 @@
 package com.kqp.inventorytabs.tabs;
 
 import com.kqp.inventorytabs.api.TabProviderRegistry;
+import com.kqp.inventorytabs.init.InventoryTabsClient;
 import com.kqp.inventorytabs.interf.TabManagerContainer;
 import com.kqp.inventorytabs.mixin.client.accessor.HandledScreenAccessor;
 import com.kqp.inventorytabs.tabs.render.TabRenderInfo;
 import com.kqp.inventorytabs.tabs.render.TabRenderer;
-import com.kqp.inventorytabs.tabs.tab.PlayerInventoryTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.MouseUtil;
 import net.fabricmc.api.EnvType;
@@ -13,7 +13,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.sound.SoundEvents;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -84,7 +86,7 @@ public class TabManager {
 
             // Check back button
             if (new Rectangle(x - TabRenderer.BUTTON_WIDTH - 4, y - 16, TabRenderer.BUTTON_WIDTH, TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
-                if (canGoBack()) {
+                if (canGoBackAPage()) {
                     setCurrentPage(currentPage - 1);
                     MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 
@@ -94,7 +96,7 @@ public class TabManager {
 
             // Check forward button
             if (new Rectangle(x + guiWidth + 4, y - 16, TabRenderer.BUTTON_WIDTH, TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
-                if (canGoForward()) {
+                if (canGoForwardAPage()) {
                     setCurrentPage(currentPage + 1);
                     MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 
@@ -124,6 +126,27 @@ public class TabManager {
                         }
                     }
                 }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (InventoryTabsClient.NEXT_TAB_KEY_BIND.matchesKey(keyCode, scanCode)) {
+            int currentTabIndex = tabs.indexOf(currentTab);
+
+            if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
+                if (currentTabIndex > 0) {
+                    onTabClick(tabs.get(currentTabIndex - 1));
+                }
+                return true;
+            } else {
+                if (currentTabIndex < tabs.size() - 1) {
+                    onTabClick(tabs.get(currentTabIndex + 1));
+                }
+
+                return true;
             }
         }
 
@@ -200,11 +223,11 @@ public class TabManager {
         return tabs.size() / (getMaxRowLength() * 2 + 1);
     }
 
-    public boolean canGoBack() {
+    public boolean canGoBackAPage() {
         return currentPage != 0;
     }
 
-    public boolean canGoForward() {
+    public boolean canGoForwardAPage() {
         return currentPage < getMaxPages();
     }
 
