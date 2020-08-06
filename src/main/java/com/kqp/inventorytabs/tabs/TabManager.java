@@ -5,7 +5,7 @@ import com.kqp.inventorytabs.interf.TabManagerContainer;
 import com.kqp.inventorytabs.mixin.client.accessor.HandledScreenAccessor;
 import com.kqp.inventorytabs.tabs.render.TabRenderInfo;
 import com.kqp.inventorytabs.tabs.render.TabRenderer;
-import com.kqp.inventorytabs.tabs.tab.PlayerTab;
+import com.kqp.inventorytabs.tabs.tab.PlayerInventoryTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.MouseUtil;
 import net.fabricmc.api.EnvType;
@@ -37,24 +37,10 @@ public class TabManager {
     public TabManager() {
         this.tabs = new ArrayList();
         this.tabRenderer = new TabRenderer(this);
-
-        tabs.add(new PlayerTab());
     }
 
     public void update() {
         refreshAvailableTabs();
-
-        for (int i = 0; i < tabs.size(); i++) {
-            if (tabs.get(i).shouldBeRemoved(MinecraftClient.getInstance().player)) {
-                tabs.remove(i);
-                i--;
-            }
-        }
-
-        tabs.sort(Comparator
-                .comparing(Tab::getPriority).reversed()
-                .thenComparing(tab -> tab.getHoverText().getString())
-        );
     }
 
     public void setCurrentTab(Tab tab) {
@@ -62,9 +48,24 @@ public class TabManager {
     }
 
     private void refreshAvailableTabs() {
+        // Add new tabs
         TabProviderRegistry.getTabProviders().forEach(tabProvider -> {
             tabProvider.addAvailableTabs(MinecraftClient.getInstance().player, tabs);
         });
+
+        // Remove old ones
+        for (int i = 0; i < tabs.size(); i++) {
+            if (tabs.get(i).shouldBeRemoved(MinecraftClient.getInstance().player)) {
+                tabs.remove(i);
+                i--;
+            }
+        }
+
+        // Sort
+        tabs.sort(Comparator
+                .comparing(Tab::getPriority).reversed()
+                .thenComparing(tab -> tab.getHoverText().getString())
+        );
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {

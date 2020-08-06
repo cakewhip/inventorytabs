@@ -2,6 +2,7 @@ package com.kqp.inventorytabs.api;
 
 import com.kqp.inventorytabs.init.InventoryTabs;
 import com.kqp.inventorytabs.tabs.provider.EnderChestTabProvider;
+import com.kqp.inventorytabs.tabs.provider.PlayerInventoryTabProvider;
 import com.kqp.inventorytabs.tabs.provider.TabProvider;
 import com.kqp.inventorytabs.tabs.provider.VanillaBlockTabProvider;
 import net.minecraft.util.Identifier;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class TabProviderRegistry {
     private static final Map<Identifier, TabProvider> TAB_PROVIDERS = new HashMap();
 
+    public static final TabProvider PLAYER_INVENTORY_TAB_PROVIDER = register(InventoryTabs.id("player_inventory_tab_provider"), new PlayerInventoryTabProvider());
     public static final TabProvider VANILLA_BLOCK_TAB_PROVIDER = register(InventoryTabs.id("vanilla_block_tab_provider"), new VanillaBlockTabProvider());
     public static final TabProvider ENDER_CHEST_TAB_PROVIDER = register(InventoryTabs.id("ender_chest_tab_provider"), new EnderChestTabProvider());
 

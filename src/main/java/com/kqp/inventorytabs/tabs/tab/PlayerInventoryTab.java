@@ -11,7 +11,7 @@ import net.minecraft.text.StringRenderable;
 /**
  * Tab for the player's inventory.
  */
-public class PlayerTab implements Tab {
+public class PlayerInventoryTab implements Tab {
     @Override
     public void open(ClientPlayerEntity player) {
         MinecraftClient.getInstance().openScreen(new InventoryScreen(player));
