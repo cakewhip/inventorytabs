@@ -52,7 +52,7 @@ public class SimpleBlockTab implements Tab {
         if (hitResult != null) {
             MinecraftClient.getInstance().interactionManager.interactBlock(
                     client.player,
-                    client.player.world,
+                    client.player.clientWorld,
                     Hand.MAIN_HAND,
                     hitResult
             );
