@@ -6,7 +6,6 @@ import com.kqp.inventorytabs.interf.TabManagerContainer;
 import com.kqp.inventorytabs.mixin.client.accessor.HandledScreenAccessor;
 import com.kqp.inventorytabs.tabs.render.TabRenderInfo;
 import com.kqp.inventorytabs.tabs.render.TabRenderer;
-import com.kqp.inventorytabs.tabs.tab.PlayerInventoryTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.MouseUtil;
 import net.fabricmc.api.EnvType;
@@ -90,7 +89,7 @@ public class TabManager {
             if (new Rectangle(x - TabRenderer.BUTTON_WIDTH - 4, y - 16, TabRenderer.BUTTON_WIDTH, TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
                 if (canGoBackAPage()) {
                     setCurrentPage(currentPage - 1);
-                    MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                    playClick();
 
                     return true;
                 }
@@ -100,8 +99,7 @@ public class TabManager {
             if (new Rectangle(x + guiWidth + 4, y - 16, TabRenderer.BUTTON_WIDTH, TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
                 if (canGoForwardAPage()) {
                     setCurrentPage(currentPage + 1);
-                    MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-
+                    playClick();
 
                     return true;
                 }
@@ -250,5 +248,9 @@ public class TabManager {
 
     public static TabManager getInstance() {
         return ((TabManagerContainer) MinecraftClient.getInstance()).getTabManager();
+    }
+
+    public static void playClick() {
+        MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 }
