@@ -14,6 +14,8 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.awt.*;
@@ -35,6 +37,8 @@ public class TabRenderer {
 
     public int bottomRowYOffset;
     private TabRenderInfo[] tabRenderInfos;
+
+    private long pageTextRefreshTime;
 
     public TabRenderer(TabManager tabManager) {
         this.tabManager = tabManager;
@@ -71,6 +75,8 @@ public class TabRenderer {
         }
 
         drawButtons(matrices, mouseX, mouseY);
+
+        drawPageText(matrices);
     }
 
     private void drawButtons(MatrixStack matrices, double mouseX, double mouseY) {
@@ -116,6 +122,47 @@ public class TabRenderer {
                 BUTTON_WIDTH,
                 BUTTON_HEIGHT
         );
+    }
+
+    private void drawPageText(MatrixStack matrices) {
+        if (pageTextRefreshTime > 0) {
+            RenderSystem.pushMatrix();
+
+            int color = 0xFFFFFFFF;
+
+            if (pageTextRefreshTime <= 20) {
+                RenderSystem.disableTexture();
+                RenderSystem.enableBlend();
+                RenderSystem.disableAlphaTest();
+                RenderSystem.defaultBlendFunc();
+                RenderSystem.colorMask(true, true, true, true);
+                float transparency = pageTextRefreshTime / 20F;
+
+                color &= 0x00FFFFFF;
+                color = ((int) (0xFF * transparency) << 24) | color;
+            }
+
+            HandledScreen currentScreen = tabManager.getCurrentScreen();
+            TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+
+            int height = ((HandledScreenAccessor) currentScreen).getBackgroundHeight();
+            int oX = currentScreen.width;
+            int oY = (currentScreen.height - height) / 2;
+
+            String text = (tabManager.currentPage + 1) + " / " + (tabManager.getMaxPages() + 1);
+            int x = (oX - textRenderer.getWidth(text)) / 2;
+            int y = oY - 34;
+
+            MinecraftClient.getInstance().textRenderer.draw(
+                    matrices,
+                    text,
+                    x,
+                    y,
+                    color
+            );
+
+            RenderSystem.popMatrix();
+        }
     }
 
     private void renderTab(MatrixStack matrices, TabRenderInfo tabRenderInfo) {
@@ -237,5 +284,13 @@ public class TabRenderer {
         }
 
         return tabRenderInfo;
+    }
+
+    public void update() {
+        pageTextRefreshTime = Math.max(pageTextRefreshTime - 1, 0);
+    }
+
+    public void resetPageTextRefreshTime() {
+        pageTextRefreshTime = 60;
     }
 }

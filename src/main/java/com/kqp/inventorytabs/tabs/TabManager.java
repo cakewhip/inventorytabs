@@ -41,6 +41,8 @@ public class TabManager {
 
     public void update() {
         refreshAvailableTabs();
+
+        tabRenderer.update();
     }
 
     public void setCurrentTab(Tab tab) {
@@ -85,6 +87,7 @@ public class TabManager {
                 if (canGoBack()) {
                     setCurrentPage(currentPage - 1);
                     MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+
                     return true;
                 }
             }
@@ -94,6 +97,7 @@ public class TabManager {
                 if (canGoForward()) {
                     setCurrentPage(currentPage + 1);
                     MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+
 
                     return true;
                 }
@@ -173,6 +177,10 @@ public class TabManager {
             System.err.println("Not enough tabs to paginate, ignoring");
 
             return;
+        }
+
+        if (this.currentPage != page) {
+            tabRenderer.resetPageTextRefreshTime();
         }
 
         this.currentPage = page;
