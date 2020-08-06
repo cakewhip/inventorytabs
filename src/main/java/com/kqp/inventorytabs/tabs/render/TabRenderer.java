@@ -33,7 +33,6 @@ public class TabRenderer {
 
     public final TabManager tabManager;
 
-    public int bottomRowYOffset;
     private TabRenderInfo[] tabRenderInfos;
 
     private long pageTextRefreshTime;
@@ -239,7 +238,7 @@ public class TabRenderer {
                         tabInfo.y = y - 28;
                     }
                 } else {
-                    tabInfo.y = y + ((HandledScreenAccessor) currentScreen).getBackgroundHeight() - 4 + bottomRowYOffset;
+                    tabInfo.y = y + ((HandledScreenAccessor) currentScreen).getBackgroundHeight() - 4;
                 }
 
                 // Calc texture dimensions
@@ -275,6 +274,21 @@ public class TabRenderer {
                 } else {
                     tabInfo.itemX = tabInfo.x + 6;
                     tabInfo.itemY = tabInfo.y + 6;
+                }
+
+                // Apply rendering hints
+                if (currentScreen instanceof TabRenderingHints) {
+                    if (topRow) {
+                        tabInfo.x += ((TabRenderingHints) currentScreen).getTopRowXOffset();
+                        tabInfo.y += ((TabRenderingHints) currentScreen).getTopRowYOffset();
+                        tabInfo.itemX += ((TabRenderingHints) currentScreen).getTopRowXOffset();
+                        tabInfo.itemY += ((TabRenderingHints) currentScreen).getTopRowYOffset();
+                    } else {
+                        tabInfo.x += ((TabRenderingHints) currentScreen).getBottomRowXOffset();
+                        tabInfo.y += ((TabRenderingHints) currentScreen).getBottomRowYOffset();
+                        tabInfo.itemX += ((TabRenderingHints) currentScreen).getBottomRowXOffset();
+                        tabInfo.itemY += ((TabRenderingHints) currentScreen).getBottomRowYOffset();
+                    }
                 }
 
                 tabRenderInfo[i] = tabInfo;

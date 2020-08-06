@@ -2,6 +2,7 @@ package com.kqp.inventorytabs.mixin.client;
 
 import com.kqp.inventorytabs.interf.TabManagerContainer;
 import com.kqp.inventorytabs.tabs.TabManager;
+import com.kqp.inventorytabs.tabs.render.TabRenderingHints;
 import com.kqp.inventorytabs.tabs.tab.GenericBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.MouseUtil;
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
-public class VanillaScreenTabAdder {
+public class VanillaScreenTabAdder implements TabRenderingHints {
     @Inject(
             method = "init",
             at = @At("RETURN")
@@ -58,10 +59,6 @@ public class VanillaScreenTabAdder {
 
             if (tabOpened != null) {
                 tabManager.onOpenTab(tabOpened);
-            }
-
-            if (screenNeedsOffset()) {
-                tabManager.tabRenderer.bottomRowYOffset = -1;
             }
         }
     }
@@ -123,6 +120,36 @@ public class VanillaScreenTabAdder {
                 callbackInfo.setReturnValue(true);
             }
         }
+    }
+
+    @Override
+    public int getTopRowXOffset() {
+        HandledScreen screen = (HandledScreen) (Object) this;
+        if (screen instanceof InventoryScreen) {
+            if (((InventoryScreen) screen).getRecipeBookWidget().isOpen()) {
+                return 77;
+            }
+        } else if (screen instanceof AbstractFurnaceScreen) {
+            if (((AbstractFurnaceScreen) screen).recipeBook.isOpen()) {
+                return 77;
+            }
+        } else if (screen instanceof CraftingScreen) {
+            if (((CraftingScreen) screen).getRecipeBookWidget().isOpen()) {
+                return 77;
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int getBottomRowXOffset() {
+        return getTopRowXOffset();
+    }
+
+    @Override
+    public int getBottomRowYOffset() {
+        return screenNeedsOffset() ? -1 : 0;
     }
 
     private boolean screenSupported() {
