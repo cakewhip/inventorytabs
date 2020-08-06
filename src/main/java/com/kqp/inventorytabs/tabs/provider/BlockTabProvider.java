@@ -1,7 +1,10 @@
 package com.kqp.inventorytabs.tabs.provider;
 
+import com.kqp.inventorytabs.init.InventoryTabs;
 import com.kqp.inventorytabs.tabs.tab.Tab;
+import com.kqp.inventorytabs.util.BlockUtil;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -25,10 +28,24 @@ public abstract class BlockTabProvider implements TabProvider {
                     BlockPos blockPos = player.getBlockPos().add(x, y, z);
 
                     if (matches(world, blockPos)) {
-                        Vec3d playerHead = player.getPos().add(0D, player.getEyeHeight(player.getPose()), 0D);
-                        Vec3d blockVec = new Vec3d(blockPos.getX() + 0.5D, blockPos.getY() + 0.5D, blockPos.getZ() + 0.5D);
+                        boolean add = false;
 
-                        if (blockVec.subtract(playerHead).lengthSquared() <= SEARCH_DISTANCE * SEARCH_DISTANCE) {
+                        if (InventoryTabs.getConfig().doSightChecks()) {
+                            BlockHitResult hitResult = BlockUtil.getLineOfSight(blockPos, player, 5D);
+
+                            if (hitResult != null) {
+                                add = true;
+                            }
+                        } else {
+                            Vec3d playerHead = player.getPos().add(0D, player.getEyeHeight(player.getPose()), 0D);
+                            Vec3d blockVec = new Vec3d(blockPos.getX() + 0.5D, blockPos.getY() + 0.5D, blockPos.getZ() + 0.5D);
+
+                            if (blockVec.subtract(playerHead).lengthSquared() <= SEARCH_DISTANCE * SEARCH_DISTANCE) {
+                                add = true;
+                            }
+                        }
+
+                        if (add) {
                             Tab tab = createTab(world, blockPos);
 
                             if (!tabs.contains(tab)) {

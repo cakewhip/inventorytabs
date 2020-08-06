@@ -49,12 +49,14 @@ public class SimpleBlockTab implements Tab {
             );
         }
 
-        MinecraftClient.getInstance().interactionManager.interactBlock(
-                client.player,
-                client.player.clientWorld,
-                Hand.MAIN_HAND,
-                hitResult
-        );
+        if (hitResult != null) {
+            MinecraftClient.getInstance().interactionManager.interactBlock(
+                    client.player,
+                    client.player.world,
+                    Hand.MAIN_HAND,
+                    hitResult
+            );
+        }
     }
 
     @Override
@@ -82,12 +84,12 @@ public class SimpleBlockTab implements Tab {
 
     @Override
     public ItemStack getItemStack() {
-        return new ItemStack(MinecraftClient.getInstance().world.getBlockState(blockPos).getBlock());
+        return new ItemStack(MinecraftClient.getInstance().player.world.getBlockState(blockPos).getBlock());
     }
 
     @Override
     public StringRenderable getHoverText() {
-        World world = MinecraftClient.getInstance().world;
+        World world = MinecraftClient.getInstance().player.world;
 
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
