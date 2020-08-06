@@ -122,7 +122,7 @@ public class TabRenderer {
     }
 
     private void drawPageText(MatrixStack matrices) {
-        if (pageTextRefreshTime > 0) {
+        if (tabManager.getMaxPages() > 1 && pageTextRefreshTime > 0) {
             RenderSystem.pushMatrix();
 
             int color = 0xFFFFFFFF;
