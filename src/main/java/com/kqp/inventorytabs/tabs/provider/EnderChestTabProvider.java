@@ -1,7 +1,6 @@
 package com.kqp.inventorytabs.tabs.provider;
 
 import com.kqp.inventorytabs.tabs.tab.ChestTab;
-import com.kqp.inventorytabs.tabs.tab.GenericBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  * Provides tabs for ender chests.
  * Limits amount of ender chest tabs to only one and takes into account if it's blocked.
  */
-public class EnderChestTabProvider extends GenericBlockTabProvider {
+public class EnderChestTabProvider extends BlockTabProvider {
     @Override
     public void addAvailableTabs(ClientPlayerEntity player, List<Tab> tabs) {
         super.addAvailableTabs(player, tabs);

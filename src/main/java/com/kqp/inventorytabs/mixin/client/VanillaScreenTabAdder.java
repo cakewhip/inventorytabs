@@ -3,9 +3,8 @@ package com.kqp.inventorytabs.mixin.client;
 import com.kqp.inventorytabs.interf.TabManagerContainer;
 import com.kqp.inventorytabs.tabs.TabManager;
 import com.kqp.inventorytabs.tabs.render.TabRenderingHints;
-import com.kqp.inventorytabs.tabs.tab.GenericBlockTab;
+import com.kqp.inventorytabs.tabs.tab.SimpleBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
-import com.kqp.inventorytabs.util.MouseUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -48,8 +47,8 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
                     for (int i = 0; i < tabManager.tabs.size(); i++) {
                         Tab tab = tabManager.tabs.get(i);
 
-                        if (tab instanceof GenericBlockTab) {
-                            if (((GenericBlockTab) tab).blockPos.equals(blockPos)) {
+                        if (tab instanceof SimpleBlockTab) {
+                            if (((SimpleBlockTab) tab).blockPos.equals(blockPos)) {
                                 tabOpened = tab;
                             }
                         }

@@ -1,7 +1,7 @@
 package com.kqp.inventorytabs.tabs.tab;
 
 import com.kqp.inventorytabs.init.InventoryTabs;
-import com.kqp.inventorytabs.tabs.provider.GenericBlockTabProvider;
+import com.kqp.inventorytabs.tabs.provider.BlockTabProvider;
 import com.kqp.inventorytabs.util.BlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,11 +24,11 @@ import java.util.Objects;
 /**
  * Generic tab for blocks.
  */
-public class GenericBlockTab implements Tab {
+public class SimpleBlockTab implements Tab {
     public final Block block;
     public final BlockPos blockPos;
 
-    public GenericBlockTab(Block block, BlockPos blockPos) {
+    public SimpleBlockTab(Block block, BlockPos blockPos) {
         this.block = block;
         this.blockPos = blockPos;
     }
@@ -73,7 +73,7 @@ public class GenericBlockTab implements Tab {
 
         Vec3d playerHead = player.getPos().add(0D, player.getEyeHeight(player.getPose()), 0D);
 
-        if (getBlockVec3d().subtract(playerHead).lengthSquared() > GenericBlockTabProvider.SEARCH_DISTANCE * GenericBlockTabProvider.SEARCH_DISTANCE) {
+        if (getBlockVec3d().subtract(playerHead).lengthSquared() > BlockTabProvider.SEARCH_DISTANCE * BlockTabProvider.SEARCH_DISTANCE) {
             return true;
         }
 
@@ -115,7 +115,7 @@ public class GenericBlockTab implements Tab {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GenericBlockTab tab = (GenericBlockTab) o;
+        SimpleBlockTab tab = (SimpleBlockTab) o;
         return Objects.equals(blockPos, tab.blockPos);
     }
 

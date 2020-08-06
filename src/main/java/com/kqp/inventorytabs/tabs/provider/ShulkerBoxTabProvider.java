@@ -1,11 +1,8 @@
 package com.kqp.inventorytabs.tabs.provider;
 
-import com.kqp.inventorytabs.tabs.tab.ChestTab;
-import com.kqp.inventorytabs.tabs.tab.GenericBlockTab;
+import com.kqp.inventorytabs.tabs.tab.SimpleBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
@@ -24,16 +21,16 @@ import java.util.stream.Collectors;
  * Provides tabs for shulker boxes.
  * Takes into account if it's blocked.
  */
-public class ShulkerBoxTabProvider extends GenericBlockTabProvider {
+public class ShulkerBoxTabProvider extends BlockTabProvider {
     @Override
     public void addAvailableTabs(ClientPlayerEntity player, List<Tab> tabs) {
         super.addAvailableTabs(player, tabs);
 
-        Set<GenericBlockTab> tabsToRemove = new HashSet();
+        Set<SimpleBlockTab> tabsToRemove = new HashSet();
 
-        List<GenericBlockTab> shulkerTabs = tabs.stream()
-                .filter(tab -> tab instanceof GenericBlockTab)
-                .map(tab -> (GenericBlockTab) tab)
+        List<SimpleBlockTab> shulkerTabs = tabs.stream()
+                .filter(tab -> tab instanceof SimpleBlockTab)
+                .map(tab -> (SimpleBlockTab) tab)
                 .filter(tab -> tab.block instanceof ShulkerBoxBlock)
                 .collect(Collectors.toList());
 
@@ -69,6 +66,6 @@ public class ShulkerBoxTabProvider extends GenericBlockTabProvider {
 
     @Override
     public Tab createTab(World world, BlockPos pos) {
-        return new GenericBlockTab(world.getBlockState(pos).getBlock(), pos);
+        return new SimpleBlockTab(world.getBlockState(pos).getBlock(), pos);
     }
 }

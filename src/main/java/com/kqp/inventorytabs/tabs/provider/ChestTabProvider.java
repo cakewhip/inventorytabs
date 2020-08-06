@@ -1,7 +1,6 @@
 package com.kqp.inventorytabs.tabs.provider;
 
 import com.kqp.inventorytabs.tabs.tab.ChestTab;
-import com.kqp.inventorytabs.tabs.tab.GenericBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.ChestType;
@@ -10,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
  * Provides tabs for chests.
  * Limits double chests to having only one tab and takes into account if it's blocked.
  */
-public class ChestTabProvider extends GenericBlockTabProvider {
+public class ChestTabProvider extends BlockTabProvider {
     @Override
     public void addAvailableTabs(ClientPlayerEntity player, List<Tab> tabs) {
         super.addAvailableTabs(player, tabs);

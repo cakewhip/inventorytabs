@@ -2,7 +2,6 @@ package com.kqp.inventorytabs.tabs.tab;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
@@ -15,7 +14,7 @@ import net.minecraft.util.math.Direction;
 /**
  * Tab for shulker boxes.
  */
-public class ShulkerBoxTab extends GenericBlockTab {
+public class ShulkerBoxTab extends SimpleBlockTab {
     public ShulkerBoxTab(Block block, BlockPos blockPos) {
         super(block, blockPos);
     }

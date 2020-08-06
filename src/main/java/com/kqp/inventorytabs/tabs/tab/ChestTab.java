@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Tab for chests
  */
-public class ChestTab extends GenericBlockTab {
+public class ChestTab extends SimpleBlockTab {
     public ChestTab(Block block, BlockPos blockPos) {
         super(block, blockPos);
     }

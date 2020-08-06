@@ -8,9 +8,9 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /**
- * Generic tab provider that exposes tabs based on nearby blocks.
+ * Tab provider that exposes tabs based on nearby blocks.
  */
-public abstract class GenericBlockTabProvider implements TabProvider {
+public abstract class BlockTabProvider implements TabProvider {
     public static final int SEARCH_DISTANCE = 5;
 
     @Override
