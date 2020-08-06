@@ -2,6 +2,7 @@ package com.kqp.inventorytabs.tabs.provider;
 
 import com.kqp.inventorytabs.tabs.tab.ChestTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
+import com.kqp.inventorytabs.util.ChestUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -42,20 +43,8 @@ public class ChestTabProvider extends BlockTabProvider {
             ChestTab tab = chestTabs.get(i);
 
             if (!tabsToRemove.contains(tab)) {
-                BlockState blockState = world.getBlockState(tab.blockPos);
-                ChestType type = blockState.get(ChestBlock.CHEST_TYPE);
-
-                if (type != ChestType.SINGLE) {
-                    Direction facing = blockState.get(ChestBlock.FACING);
-                    Direction otherBlock;
-
-                    if (type == ChestType.LEFT) {
-                        otherBlock = facing.rotateYClockwise();
-                    } else {
-                        otherBlock = facing.rotateYCounterclockwise();
-                    }
-
-                    tabsToRemove.add(new ChestTab(tab.block, tab.blockPos.offset(otherBlock)));
+                if (ChestUtil.isDouble(world, tab.blockPos)) {
+                    tabsToRemove.add(new ChestTab(tab.block, ChestUtil.getOtherChestBlockPos(world, tab.blockPos)));
                 }
             }
         }

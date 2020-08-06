@@ -5,18 +5,25 @@ import com.kqp.inventorytabs.tabs.TabManager;
 import com.kqp.inventorytabs.tabs.render.TabRenderingHints;
 import com.kqp.inventorytabs.tabs.tab.SimpleBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
+import com.kqp.inventorytabs.util.ChestUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
@@ -44,12 +51,24 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
                     BlockHitResult blockHitResult = (BlockHitResult) client.crosshairTarget;
                     BlockPos blockPos = blockHitResult.getBlockPos();
 
+                    Set<BlockPos> matchingBlockPositions = new HashSet();
+                    matchingBlockPositions.add(blockPos);
+
+                    // For double chests
+                    World world = MinecraftClient.getInstance().player.world;
+                    if (world.getBlockState(blockPos).getBlock() instanceof ChestBlock) {
+                        if (ChestUtil.isDouble(world, blockPos)) {
+                            matchingBlockPositions.add(ChestUtil.getOtherChestBlockPos(world, blockPos));
+                        }
+                    }
+
                     for (int i = 0; i < tabManager.tabs.size(); i++) {
                         Tab tab = tabManager.tabs.get(i);
 
                         if (tab instanceof SimpleBlockTab) {
-                            if (((SimpleBlockTab) tab).blockPos.equals(blockPos)) {
+                            if (matchingBlockPositions.contains(((SimpleBlockTab) tab).blockPos)) {
                                 tabOpened = tab;
+                                break;
                             }
                         }
                     }
