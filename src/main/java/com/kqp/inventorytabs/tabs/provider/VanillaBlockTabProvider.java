@@ -27,7 +27,6 @@ public class VanillaBlockTabProvider extends GenericBlockTabProvider {
         blocks.add(Blocks.LOOM);
         blocks.add(Blocks.SMITHING_TABLE);
         blocks.add(Blocks.STONECUTTER);
-        blocks.add(Blocks.CHEST);
         blocks.add(Blocks.BARREL);
         blocks.add(Blocks.BLAST_FURNACE);
         blocks.add(Blocks.SMOKER);

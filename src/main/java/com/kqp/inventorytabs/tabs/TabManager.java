@@ -54,11 +54,6 @@ public class TabManager {
     }
 
     private void refreshAvailableTabs() {
-        // Add new tabs
-        TabProviderRegistry.getTabProviders().forEach(tabProvider -> {
-            tabProvider.addAvailableTabs(MinecraftClient.getInstance().player, tabs);
-        });
-
         // Remove old ones
         for (int i = 0; i < tabs.size(); i++) {
             if (tabs.get(i).shouldBeRemoved()) {
@@ -66,6 +61,11 @@ public class TabManager {
                 i--;
             }
         }
+
+        // Add new tabs
+        TabProviderRegistry.getTabProviders().forEach(tabProvider -> {
+            tabProvider.addAvailableTabs(MinecraftClient.getInstance().player, tabs);
+        });
 
         // Sort
         tabs.sort(Comparator

@@ -1,29 +1,56 @@
 package com.kqp.inventorytabs.tabs.provider;
 
+import com.kqp.inventorytabs.tabs.tab.ChestTab;
 import com.kqp.inventorytabs.tabs.tab.GenericBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Provides tabs for ender chests.
- * Limits amount of ender chest tabs to only one.
+ * Limits amount of ender chest tabs to only one and takes into account if it's blocked.
  */
 public class EnderChestTabProvider extends GenericBlockTabProvider {
     @Override
     public void addAvailableTabs(ClientPlayerEntity player, List<Tab> tabs) {
-        for (int i = 0; i < tabs.size(); i++) {
-            Tab tab = tabs.get(i);
-            if (tab instanceof GenericBlockTab && ((GenericBlockTab) tab).block == Blocks.ENDER_CHEST) {
-                return;
+        super.addAvailableTabs(player, tabs);
+
+        Set<ChestTab> tabsToRemove = new HashSet();
+
+        List<ChestTab> chestTabs = tabs.stream()
+                .filter(tab -> tab instanceof ChestTab)
+                .map(tab -> (ChestTab) tab)
+                .filter(tab -> tab.block == Blocks.ENDER_CHEST)
+                .collect(Collectors.toList());
+
+        World world = player.world;
+
+        // Add any chests that are blocked
+        chestTabs.stream()
+                .filter(tab -> ChestBlock.isChestBlocked(world, tab.blockPos))
+                .forEach(tabsToRemove::add);
+
+        boolean found = false;
+
+        for (ChestTab tab : chestTabs) {
+            if (!tabsToRemove.contains(tab)) {
+                if (!found) {
+                    found = true;
+                } else {
+                    tabsToRemove.add(tab);
+                }
             }
         }
 
-        super.addAvailableTabs(player, tabs);
+        tabs.removeAll(tabsToRemove);
     }
 
     @Override
@@ -33,6 +60,6 @@ public class EnderChestTabProvider extends GenericBlockTabProvider {
 
     @Override
     public Tab createTab(World world, BlockPos pos) {
-        return new GenericBlockTab(Blocks.ENDER_CHEST, pos);
+        return new ChestTab(Blocks.ENDER_CHEST, pos);
     }
 }
