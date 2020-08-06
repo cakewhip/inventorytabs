@@ -33,9 +33,7 @@ public class VanillaBlockTabProvider extends GenericBlockTabProvider {
         blocks.add(Blocks.BREWING_STAND);
 
         Registry.BLOCK.forEach(block -> {
-            if (block instanceof ShulkerBoxBlock) {
-                blocks.add(block);
-            } else if (block instanceof AnvilBlock) {
+            if (block instanceof AnvilBlock) {
                 blocks.add(block);
             }
         });

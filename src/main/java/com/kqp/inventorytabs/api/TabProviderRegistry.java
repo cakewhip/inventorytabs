@@ -19,6 +19,7 @@ public class TabProviderRegistry {
     public static final TabProvider VANILLA_BLOCK_TAB_PROVIDER = register(InventoryTabs.id("vanilla_block_tab_provider"), new VanillaBlockTabProvider());
     public static final TabProvider CHEST_TAB_PROVIDER = register(InventoryTabs.id("chest_tab_provider"), new ChestTabProvider());
     public static final TabProvider ENDER_CHEST_TAB_PROVIDER = register(InventoryTabs.id("ender_chest_tab_provider"), new EnderChestTabProvider());
+    public static final TabProvider SHULKER_BOX_TAB_PROVIDER = register(InventoryTabs.id("shulker_box_tab_provider"), new ShulkerBoxTabProvider());
 
     public static void init() {
     }

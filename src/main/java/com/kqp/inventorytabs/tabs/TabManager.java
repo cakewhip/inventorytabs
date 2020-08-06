@@ -156,6 +156,8 @@ public class TabManager {
     }
 
     public void onScreenOpen(HandledScreen screen) {
+        refreshAvailableTabs();
+
         setCurrentScreen(screen);
         tabRenderer.bottomRowYOffset = 0;
         MouseUtil.tryPop();
