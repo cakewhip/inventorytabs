@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
  * Limits double chests to having only one tab and takes into account if it's blocked.
  */
 public class ChestTabProvider extends BlockTabProvider {
+    private final Set<Block> chestBlocks = new HashSet();
+
     @Override
     public void addAvailableTabs(ClientPlayerEntity player, List<Tab> tabs) {
         super.addAvailableTabs(player, tabs);
@@ -29,7 +31,7 @@ public class ChestTabProvider extends BlockTabProvider {
         List<ChestTab> chestTabs = tabs.stream()
                 .filter(tab -> tab instanceof ChestTab)
                 .map(tab -> (ChestTab) tab)
-                .filter(tab -> tab.block == Blocks.CHEST || tab.block == Blocks.TRAPPED_CHEST)
+                .filter(tab -> chestBlocks.contains(tab.block))
                 .collect(Collectors.toList());
 
         World world = player.world;
@@ -50,6 +52,18 @@ public class ChestTabProvider extends BlockTabProvider {
         }
 
         tabs.removeAll(tabsToRemove);
+    }
+
+    public void addChestBlock(Block block) {
+        chestBlocks.add(block);
+    }
+
+    public void removeChestBlock(Block block) {
+        chestBlocks.remove(block);
+    }
+
+    public Set<Block> getChestBlocks() {
+        return this.chestBlocks;
     }
 
     @Override

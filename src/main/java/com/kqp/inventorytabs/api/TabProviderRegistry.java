@@ -2,8 +2,6 @@ package com.kqp.inventorytabs.api;
 
 import com.kqp.inventorytabs.init.InventoryTabs;
 import com.kqp.inventorytabs.tabs.provider.*;
-import com.kqp.inventorytabs.tabs.tab.PlayerInventoryTab;
-import com.kqp.inventorytabs.tabs.tab.SimpleBlockTab;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -28,10 +26,11 @@ public class TabProviderRegistry {
     public static final ShulkerBoxTabProvider SHULKER_BOX_TAB_PROVIDER = (ShulkerBoxTabProvider) register(InventoryTabs.id("shulker_box_tab_provider"), new ShulkerBoxTabProvider());
 
     public static void init() {
-        addVanillaBlockTabProviders();
+        addVanillaSimpleBlockTabProviders();
+        addVanillaChestTabProviders();
     }
     
-    private static void addVanillaBlockTabProviders() {
+    private static void addVanillaSimpleBlockTabProviders() {
         registerSimpleBlock(Blocks.FURNACE);
         registerSimpleBlock(Blocks.CARTOGRAPHY_TABLE);
         registerSimpleBlock(Blocks.CRAFTING_TABLE);
@@ -55,13 +54,27 @@ public class TabProviderRegistry {
         });
     }
 
+    private static void addVanillaChestTabProviders() {
+        registerChest(Blocks.CHEST);
+        registerChest(Blocks.TRAPPED_CHEST);
+    }
+
     /**
-     * Used to register a block with a simple block tab provider.
-     * 
+     * Used to register a block with the simple block tab provider.
+     *
      * @param block
      */
     public static void registerSimpleBlock(Block block) {
         SIMPLE_BLOCK_TAB_PROVIDER.addBlock(block);
+    }
+
+    /**
+     * Used to register a chest with the chest tab provider.
+     *
+     * @param block
+     */
+    public static void registerChest(Block block) {
+        CHEST_TAB_PROVIDER.addChestBlock(block);
     }
 
     public static TabProvider register(Identifier id, TabProvider tabProvider) {
