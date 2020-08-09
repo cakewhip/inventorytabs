@@ -185,7 +185,9 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
                 || screen instanceof CartographyTableScreen
                 || screen instanceof LoomScreen
                 || screen instanceof StonecutterScreen
-                || screen instanceof GrindstoneScreen;
+                || screen instanceof GrindstoneScreen
+                || screen instanceof HopperScreen
+                || screen instanceof Generic3x3ContainerScreen;
     }
 
     private boolean screenDoesDumbBlock() {
