@@ -17,32 +17,17 @@ public class BlockUtil {
         double distanceSquared = distance * distance;
 
         Vec3d playerHead = player.getPos().add(0D, player.getEyeHeight(player.getPose()), 0D);
-        
-        Vec3d center = new Vec3d(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
-        
-        BlockHitResult hitResult = getBlockHitResult(playerHead, center, distanceSquared, world, pos, blockState);
-        
-        if (hitResult == null) {
-            Vec3d baseCorner = new Vec3d(pos.getX() + 0.25D, pos.getY() + 0.25D, pos.getZ() + 0.25D);
+        Vec3d blockVec = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
 
-            for (int x = 0; x < 2; x++) {
-                for (int y = 0; y < 2; y++) {
-                    for (int z = 0; z < 2; z++) {
-                        Vec3d corner = baseCorner.add(x * 0.5D, y * 0.5D, z * 0.5D);
+        for (int i = 0; i < SIGHT_OFFSETS.length; i++) {
+            Vec3d blockPosCheck = blockVec.add(SIGHT_OFFSETS[i]);
 
-                        hitResult = getBlockHitResult(playerHead, corner, distanceSquared, world, pos, blockState);
+            BlockHitResult result = getBlockHitResult(playerHead, blockPosCheck, distanceSquared, world, pos, blockState);
 
-                        if (hitResult != null) {
-                            break;
-                        }
-                    }
+            if (result != null) {
+                if (result.getBlockPos().equals(pos)) {
+                    return result;
                 }
-            }
-        }
-
-        if (hitResult != null) {
-            if (hitResult.getBlockPos().equals(pos)) {
-                return hitResult;
             }
         }
 
@@ -68,4 +53,45 @@ public class BlockUtil {
 
         return null;
     }
+    
+    private static final Vec3d[] SIGHT_OFFSETS = {
+            // Center
+            new Vec3d(0.5D, 0.5D, 0.5D),
+
+            // Corners
+            new Vec3d(0.0D, 0.0D, 0.0D),
+            new Vec3d(1.0D, 0.0D, 0.0D),
+            new Vec3d(0.0D, 1.0D, 0.0D),
+            new Vec3d(0.0D, 0.0D, 1.0D),
+            new Vec3d(1.0D, 1.0D, 0.0D),
+            new Vec3d(0.0D, 1.0D, 1.0D),
+            new Vec3d(1.0D, 0.0D, 1.0D),
+            new Vec3d(1.0D, 1.0D, 1.0D),
+
+            // Side centers
+            new Vec3d(0.5D, 0D, 0.5D),
+            new Vec3d(0.5D, 1D, 0.5D),
+            new Vec3d(0.0D, 0.5D, 0.5D),
+            new Vec3d(1.0D, 0.5D, 0.5D),
+            new Vec3d(0.5D, 0.5D, 0.0D),
+            new Vec3d(0.5D, 0.5D, 1.0D),
+            
+            // Corners, slightly in
+            new Vec3d(0.2D, 0.2D, 0.2D),
+            new Vec3d(0.8D, 0.2D, 0.2D),
+            new Vec3d(0.2D, 0.8D, 0.2D),
+            new Vec3d(0.2D, 0.2D, 0.8D),
+            new Vec3d(0.8D, 0.8D, 0.2D),
+            new Vec3d(0.2D, 0.8D, 0.8D),
+            new Vec3d(0.8D, 0.2D, 0.8D),
+            new Vec3d(0.8D, 0.8D, 0.8D),
+
+            // Side centers, slightly in
+            new Vec3d(0.5D, 0.2D, 0.5D),
+            new Vec3d(0.5D, 0.8D, 0.5D),
+            new Vec3d(0.2D, 0.5D, 0.5D),
+            new Vec3d(0.8D, 0.5D, 0.5D),
+            new Vec3d(0.5D, 0.5D, 0.2D),
+            new Vec3d(0.5D, 0.5D, 0.8D),
+    };
 }
