@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.command.arguments.EntityAnchorArgumentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.StringRenderable;
@@ -50,6 +51,13 @@ public class SimpleBlockTab implements Tab {
         }
 
         if (hitResult != null) {
+            if (InventoryTabs.getConfig().rotatePlayer) {
+                MinecraftClient.getInstance().player.lookAt(
+                        EntityAnchorArgumentType.EntityAnchor.EYES,
+                        getBlockVec3d()
+                );
+            }
+
             MinecraftClient.getInstance().interactionManager.interactBlock(
                     client.player,
                     client.player.clientWorld,

@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient;
 @Config(name = "inventory_tabs")
 public class InventoryTabsConfig implements ConfigData {
     public boolean doSightChecksFlag = false;
+    public boolean rotatePlayer = false;
 
     @Environment(EnvType.CLIENT)
     public boolean doSightChecks() {
