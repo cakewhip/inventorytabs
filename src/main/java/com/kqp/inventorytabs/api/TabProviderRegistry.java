@@ -28,8 +28,9 @@ public class TabProviderRegistry {
     public static void init() {
         addVanillaSimpleBlockTabProviders();
         addVanillaChestTabProviders();
+        addModSimpleBlockTabProviders();
     }
-    
+
     private static void addVanillaSimpleBlockTabProviders() {
         registerSimpleBlock(Blocks.FURNACE);
         registerSimpleBlock(Blocks.CARTOGRAPHY_TABLE);
@@ -59,6 +60,74 @@ public class TabProviderRegistry {
         registerChest(Blocks.TRAPPED_CHEST);
     }
 
+    private static void addModSimpleBlockTabProviders() {
+        registerSimpleBlock(new Identifier("morecraftingtables", "warped_crafting_table"));
+        registerSimpleBlock(new Identifier("morecraftingtables", "spruce_crafting_table"));
+        registerSimpleBlock(new Identifier("morecraftingtables", "jungle_crafting_table"));
+        registerSimpleBlock(new Identifier("morecraftingtables", "dark_oak_crafting_table"));
+        registerSimpleBlock(new Identifier("morecraftingtables", "crimson_crafting_table"));
+        registerSimpleBlock(new Identifier("morecraftingtables", "birch_crafting_table"));
+        registerSimpleBlock(new Identifier("morecraftingtables", "acacia_crafting_table"));
+
+        registerSimpleBlock(new Identifier("linkedstorage", "storageblock"));
+
+        registerSimpleBlock(new Identifier("fabric-furnaces", "obsidian_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "nether_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "iron_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "gold_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "fabric_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "ethereal_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "end_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "emerald_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "diamond_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_obsidian_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_nether_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_iron_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_gold_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_fabric_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_ethereal_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_end_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_emerald_furnace"));
+        registerSimpleBlock(new Identifier("fabric-furnaces", "crystal_diamond_furnace"));
+
+        registerSimpleBlock(new Identifier("automated_crafting", "auto_crafter"));
+
+        registerSimpleBlock(new Identifier("byg", "zelkova_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "witch_hazel_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "willow_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "skyris_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "redwood_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "rainbow_eucalyptus_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "pine_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "aspen_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "baobab_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "blue_enchanted_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "cherry_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "cika_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "cypress_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "ebony_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "fir_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "green_enchanted_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "holly_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "jacaranda_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "mahogany_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "mangrove_crafting_table"));
+        registerSimpleBlock(new Identifier("byg", "maple_crafting_table"));
+
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_crimson"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_mushroom"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_mushroom_fir"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_reed"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_rubeus"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_stalagnate"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_warped"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_wart"));
+        registerSimpleBlock(new Identifier("better-nether", "crafting_table_willow"));
+        registerSimpleBlock(new Identifier("better-nether", "basalt_furnace"));
+        registerSimpleBlock(new Identifier("better-nether", "blackstone_furnace"));
+        registerSimpleBlock(new Identifier("better-nether", "netherrack_furnace"));
+    }
+
     /**
      * Used to register a block with the simple block tab provider.
      *
@@ -66,6 +135,15 @@ public class TabProviderRegistry {
      */
     public static void registerSimpleBlock(Block block) {
         SIMPLE_BLOCK_TAB_PROVIDER.addBlock(block);
+    }
+
+    /**
+     * Used to register a block identifier with the simple block tab provider.
+     *
+     * @param block
+     */
+    public static void registerSimpleBlock(Identifier blockId) {
+        SIMPLE_BLOCK_TAB_PROVIDER.addBlock(blockId);
     }
 
     /**
