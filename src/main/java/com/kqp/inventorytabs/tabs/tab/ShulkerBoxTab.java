@@ -8,6 +8,7 @@ import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.mob.ShulkerLidCollisions;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -15,8 +16,8 @@ import net.minecraft.util.math.Direction;
  * Tab for shulker boxes.
  */
 public class ShulkerBoxTab extends SimpleBlockTab {
-    public ShulkerBoxTab(Block block, BlockPos blockPos) {
-        super(block, blockPos);
+    public ShulkerBoxTab(Identifier blockId, BlockPos blockPos) {
+        super(blockId, blockPos);
     }
 
     @Override

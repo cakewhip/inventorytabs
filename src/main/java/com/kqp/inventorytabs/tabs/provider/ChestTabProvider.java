@@ -3,11 +3,12 @@ package com.kqp.inventorytabs.tabs.provider;
 import com.kqp.inventorytabs.tabs.tab.ChestTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.ChestUtil;
-import net.minecraft.block.*;
-import net.minecraft.block.enums.ChestType;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.HashSet;
@@ -31,7 +32,7 @@ public class ChestTabProvider extends BlockTabProvider {
         List<ChestTab> chestTabs = tabs.stream()
                 .filter(tab -> tab instanceof ChestTab)
                 .map(tab -> (ChestTab) tab)
-                .filter(tab -> chestBlocks.contains(tab.block))
+                .filter(tab -> chestBlocks.contains(tab.blockId))
                 .collect(Collectors.toList());
 
         World world = player.world;
@@ -46,7 +47,7 @@ public class ChestTabProvider extends BlockTabProvider {
 
             if (!tabsToRemove.contains(tab)) {
                 if (ChestUtil.isDouble(world, tab.blockPos)) {
-                    tabsToRemove.add(new ChestTab(tab.block, ChestUtil.getOtherChestBlockPos(world, tab.blockPos)));
+                    tabsToRemove.add(new ChestTab(tab.blockId, ChestUtil.getOtherChestBlockPos(world, tab.blockPos)));
                 }
             }
         }
@@ -74,6 +75,6 @@ public class ChestTabProvider extends BlockTabProvider {
 
     @Override
     public Tab createTab(World world, BlockPos pos) {
-        return new ChestTab(world.getBlockState(pos).getBlock(), pos);
+        return new ChestTab(Registry.BLOCK.getId(world.getBlockState(pos).getBlock()), pos);
     }
 }
