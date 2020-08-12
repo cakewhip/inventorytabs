@@ -29,6 +29,7 @@ public class TabProviderRegistry {
         addVanillaSimpleBlockTabProviders();
         addVanillaChestTabProviders();
         addModSimpleBlockTabProviders();
+        addModChestTabProviders();
     }
 
     private static void addVanillaSimpleBlockTabProviders() {
@@ -128,6 +129,23 @@ public class TabProviderRegistry {
         registerSimpleBlock(new Identifier("better-nether", "netherrack_furnace"));
     }
 
+    private static void addModChestTabProviders() {
+        registerChest(new Identifier("expandedstorage", "wood_chest"));
+        registerChest(new Identifier("expandedstorage", "pumpkin_chest"));
+        registerChest(new Identifier("expandedstorage", "old_wood_chest"));
+        registerChest(new Identifier("expandedstorage", "old_obsidian_chest"));
+        registerChest(new Identifier("expandedstorage", "old_netherite_chest"));
+        registerChest(new Identifier("expandedstorage", "old_iron_chest"));
+        registerChest(new Identifier("expandedstorage", "old_gold_chest"));
+        registerChest(new Identifier("expandedstorage", "old_diamond_chest"));
+        registerChest(new Identifier("expandedstorage", "obsidian_chest"));
+        registerChest(new Identifier("expandedstorage", "netherite_chest"));
+        registerChest(new Identifier("expandedstorage", "iron_chest"));
+        registerChest(new Identifier("expandedstorage", "gold_chest"));
+        registerChest(new Identifier("expandedstorage", "diamond_chest"));
+        registerChest(new Identifier("expandedstorage", "christmas_chest"));
+    }
+
     /**
      * Used to register a block with the simple block tab provider.
      *
@@ -140,7 +158,7 @@ public class TabProviderRegistry {
     /**
      * Used to register a block identifier with the simple block tab provider.
      *
-     * @param block
+     * @param blockId
      */
     public static void registerSimpleBlock(Identifier blockId) {
         SIMPLE_BLOCK_TAB_PROVIDER.addBlock(blockId);
@@ -153,6 +171,15 @@ public class TabProviderRegistry {
      */
     public static void registerChest(Block block) {
         CHEST_TAB_PROVIDER.addChestBlock(block);
+    }
+
+    /**
+     * Used to register a chest with the chest tab provider.
+     *
+     * @param blockId
+     */
+    public static void registerChest(Identifier blockId) {
+        CHEST_TAB_PROVIDER.addChestBlock(blockId);
     }
 
     public static TabProvider register(Identifier id, TabProvider tabProvider) {
