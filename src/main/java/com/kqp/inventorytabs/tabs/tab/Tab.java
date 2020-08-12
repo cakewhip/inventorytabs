@@ -2,9 +2,8 @@ package com.kqp.inventorytabs.tabs.tab;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.StringRenderable;
+import net.minecraft.text.Text;
 
 /**
  * Base interface for tabs.
@@ -36,7 +35,7 @@ public interface Tab {
      *
      * @return
      */
-    StringRenderable getHoverText();
+    Text getHoverText();
 
     /**
      * Called when the screen associated with the tab is closed.

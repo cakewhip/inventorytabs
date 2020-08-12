@@ -7,10 +7,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.command.arguments.EntityAnchorArgumentType;
+import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringRenderable;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
@@ -96,7 +95,7 @@ public class SimpleBlockTab implements Tab {
     }
 
     @Override
-    public StringRenderable getHoverText() {
+    public Text getHoverText() {
         World world = MinecraftClient.getInstance().player.world;
 
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
