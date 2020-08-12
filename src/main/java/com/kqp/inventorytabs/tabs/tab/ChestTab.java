@@ -1,6 +1,5 @@
 package com.kqp.inventorytabs.tabs.tab;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;

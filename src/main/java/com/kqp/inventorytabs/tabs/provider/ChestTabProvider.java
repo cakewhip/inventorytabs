@@ -4,9 +4,9 @@ import com.kqp.inventorytabs.tabs.tab.ChestTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.ChestUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Limits double chests to having only one tab and takes into account if it's blocked.
  */
 public class ChestTabProvider extends BlockTabProvider {
-    private final Set<Block> chestBlocks = new HashSet();
+    private final Set<Identifier> chestBlocks = new HashSet();
 
     @Override
     public void addAvailableTabs(ClientPlayerEntity player, List<Tab> tabs) {
@@ -56,21 +56,26 @@ public class ChestTabProvider extends BlockTabProvider {
     }
 
     public void addChestBlock(Block block) {
-        chestBlocks.add(block);
+        chestBlocks.add(Registry.BLOCK.getId(block));
     }
 
-    public void removeChestBlock(Block block) {
-        chestBlocks.remove(block);
+    public void addChestBlock(Identifier blockId) {
+        chestBlocks.add(blockId);
     }
 
-    public Set<Block> getChestBlocks() {
+    public void removeChestBlockId(Identifier blockId) {
+        chestBlocks.remove(blockId);
+    }
+
+    public Set<Identifier> getChestBlockIds() {
         return this.chestBlocks;
     }
 
     @Override
     public boolean matches(World world, BlockPos pos) {
         Block block = world.getBlockState(pos).getBlock();
-        return block == Blocks.CHEST || block == Blocks.TRAPPED_CHEST;
+
+        return chestBlocks.contains(Registry.BLOCK.getId(block));
     }
 
     @Override
