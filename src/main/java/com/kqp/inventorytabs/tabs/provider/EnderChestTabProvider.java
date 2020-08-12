@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.HashSet;
@@ -27,7 +28,7 @@ public class EnderChestTabProvider extends BlockTabProvider {
         List<ChestTab> chestTabs = tabs.stream()
                 .filter(tab -> tab instanceof ChestTab)
                 .map(tab -> (ChestTab) tab)
-                .filter(tab -> tab.block == Blocks.ENDER_CHEST)
+                .filter(tab -> tab.blockId == Registry.BLOCK.getId(Blocks.ENDER_CHEST))
                 .collect(Collectors.toList());
 
         World world = player.world;
@@ -59,6 +60,6 @@ public class EnderChestTabProvider extends BlockTabProvider {
 
     @Override
     public Tab createTab(World world, BlockPos pos) {
-        return new ChestTab(Blocks.ENDER_CHEST, pos);
+        return new ChestTab(Registry.BLOCK.getId(Blocks.ENDER_CHEST), pos);
     }
 }

@@ -4,14 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
 /**
  * Tab for chests
  */
 public class ChestTab extends SimpleBlockTab {
-    public ChestTab(Block block, BlockPos blockPos) {
-        super(block, blockPos);
+    public ChestTab(Identifier blockId, BlockPos blockPos) {
+        super(blockId, blockPos);
     }
 
     @Override

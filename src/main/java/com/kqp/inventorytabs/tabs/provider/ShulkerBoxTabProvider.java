@@ -10,6 +10,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.mob.ShulkerLidCollisions;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.HashSet;
@@ -31,7 +32,7 @@ public class ShulkerBoxTabProvider extends BlockTabProvider {
         List<SimpleBlockTab> shulkerTabs = tabs.stream()
                 .filter(tab -> tab instanceof SimpleBlockTab)
                 .map(tab -> (SimpleBlockTab) tab)
-                .filter(tab -> tab.block instanceof ShulkerBoxBlock)
+                .filter(tab -> Registry.BLOCK.get(tab.blockId) instanceof ShulkerBoxBlock)
                 .collect(Collectors.toList());
 
         World world = player.world;
@@ -66,6 +67,6 @@ public class ShulkerBoxTabProvider extends BlockTabProvider {
 
     @Override
     public Tab createTab(World world, BlockPos pos) {
-        return new SimpleBlockTab(world.getBlockState(pos).getBlock(), pos);
+        return new SimpleBlockTab(Registry.BLOCK.getId(world.getBlockState(pos).getBlock()), pos);
     }
 }
