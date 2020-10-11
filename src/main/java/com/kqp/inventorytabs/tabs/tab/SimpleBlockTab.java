@@ -3,14 +3,12 @@ package com.kqp.inventorytabs.tabs.tab;
 import com.kqp.inventorytabs.init.InventoryTabs;
 import com.kqp.inventorytabs.tabs.provider.BlockTabProvider;
 import com.kqp.inventorytabs.util.BlockUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.command.arguments.EntityAnchorArgumentType;
+import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringRenderable;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
@@ -45,26 +43,26 @@ public class SimpleBlockTab implements Tab {
             hitResult = BlockUtil.getLineOfSight(blockPos, client.player, 5D);
         } else {
             hitResult = new BlockHitResult(
-                    client.player.getPos(),
-                    Direction.EAST,
-                    blockPos,
-                    false
+                client.player.getPos(),
+                Direction.EAST,
+                blockPos,
+                false
             );
         }
 
         if (hitResult != null) {
             if (InventoryTabs.getConfig().rotatePlayer) {
                 MinecraftClient.getInstance().player.lookAt(
-                        EntityAnchorArgumentType.EntityAnchor.EYES,
-                        getBlockVec3d()
+                    EntityAnchorArgumentType.EntityAnchor.EYES,
+                    getBlockVec3d()
                 );
             }
 
             MinecraftClient.getInstance().interactionManager.interactBlock(
-                    client.player,
-                    client.player.clientWorld,
-                    Hand.MAIN_HAND,
-                    hitResult
+                client.player,
+                client.player.clientWorld,
+                Hand.MAIN_HAND,
+                hitResult
             );
         }
     }
@@ -73,7 +71,8 @@ public class SimpleBlockTab implements Tab {
     public boolean shouldBeRemoved() {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
 
-        if (!Registry.BLOCK.getId(player.world.getBlockState(blockPos).getBlock()).equals(blockId)) {
+        if (!Registry.BLOCK.getId(player.world.getBlockState(blockPos).getBlock())
+            .equals(blockId)) {
             return true;
         }
 
@@ -85,20 +84,18 @@ public class SimpleBlockTab implements Tab {
 
         Vec3d playerHead = player.getPos().add(0D, player.getEyeHeight(player.getPose()), 0D);
 
-        if (getBlockVec3d().subtract(playerHead).lengthSquared() > BlockTabProvider.SEARCH_DISTANCE * BlockTabProvider.SEARCH_DISTANCE) {
-            return true;
-        }
-
-        return false;
+        return getBlockVec3d().subtract(playerHead).lengthSquared() >
+            BlockTabProvider.SEARCH_DISTANCE * BlockTabProvider.SEARCH_DISTANCE;
     }
 
     @Override
     public ItemStack getItemStack() {
-        return new ItemStack(MinecraftClient.getInstance().player.world.getBlockState(blockPos).getBlock());
+        return new ItemStack(
+            MinecraftClient.getInstance().player.world.getBlockState(blockPos).getBlock());
     }
 
     @Override
-    public StringRenderable getHoverText() {
+    public Text getHoverText() {
         World world = MinecraftClient.getInstance().player.world;
 
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
@@ -117,16 +114,20 @@ public class SimpleBlockTab implements Tab {
 
     private Vec3d getBlockVec3d() {
         return new Vec3d(
-                blockPos.getX() + 0.5D,
-                blockPos.getY() + 0.5D,
-                blockPos.getZ() + 0.5D
+            blockPos.getX() + 0.5D,
+            blockPos.getY() + 0.5D,
+            blockPos.getZ() + 0.5D
         );
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SimpleBlockTab tab = (SimpleBlockTab) o;
         return Objects.equals(blockPos, tab.blockPos);
     }

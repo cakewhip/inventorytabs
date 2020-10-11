@@ -68,8 +68,8 @@ public class TabManager {
 
         // Sort
         tabs.sort(Comparator
-                .comparing(Tab::getPriority).reversed()
-                .thenComparing(tab -> tab.getHoverText().getString())
+            .comparing(Tab::getPriority).reversed()
+            .thenComparing(tab -> tab.getHoverText().getString())
         );
     }
 
@@ -81,12 +81,13 @@ public class TabManager {
             int y = (currentScreen.height - guiHeight) / 2;
 
             if (mouseX > x && mouseX < x + guiWidth
-                    && mouseY > y && mouseY < y + guiHeight) {
+                && mouseY > y && mouseY < y + guiHeight) {
                 return false;
             }
 
             // Check back button
-            if (new Rectangle(x - TabRenderer.BUTTON_WIDTH - 4, y - 16, TabRenderer.BUTTON_WIDTH, TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
+            if (new Rectangle(x - TabRenderer.BUTTON_WIDTH - 4, y - 16, TabRenderer.BUTTON_WIDTH,
+                TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
                 if (canGoBackAPage()) {
                     setCurrentPage(currentPage - 1);
                     playClick();
@@ -96,7 +97,8 @@ public class TabManager {
             }
 
             // Check forward button
-            if (new Rectangle(x + guiWidth + 4, y - 16, TabRenderer.BUTTON_WIDTH, TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
+            if (new Rectangle(x + guiWidth + 4, y - 16, TabRenderer.BUTTON_WIDTH,
+                TabRenderer.BUTTON_HEIGHT).contains(mouseX, mouseY)) {
                 if (canGoForwardAPage()) {
                     setCurrentPage(currentPage + 1);
                     playClick();
@@ -113,10 +115,10 @@ public class TabManager {
                 if (tabRenderInfo != null) {
                     if (tabRenderInfo.tabReference != currentTab) {
                         Rectangle rect = new Rectangle(
-                                tabRenderInfo.x,
-                                tabRenderInfo.y,
-                                tabRenderInfo.texW,
-                                tabRenderInfo.texH
+                            tabRenderInfo.x,
+                            tabRenderInfo.y,
+                            tabRenderInfo.texW,
+                            tabRenderInfo.texH
                         );
 
                         if (rect.contains(mouseX, mouseY)) {
@@ -136,7 +138,8 @@ public class TabManager {
         if (InventoryTabsClient.NEXT_TAB_KEY_BIND.matchesKey(keyCode, scanCode)) {
             int currentTabIndex = tabs.indexOf(currentTab);
 
-            if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
+            if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+                GLFW.GLFW_KEY_LEFT_SHIFT)) {
                 if (currentTabIndex > 0) {
                     onTabClick(tabs.get(currentTabIndex - 1));
                 }
@@ -172,7 +175,8 @@ public class TabManager {
         // This fixes the inventory desync issue
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player.currentScreenHandler != null) {
-            client.getNetworkHandler().sendPacket(new GuiCloseC2SPacket(client.player.currentScreenHandler.syncId));
+            client.getNetworkHandler()
+                .sendPacket(new GuiCloseC2SPacket(client.player.currentScreenHandler.syncId));
         }
 
         // Open new tab
@@ -251,6 +255,7 @@ public class TabManager {
     }
 
     public static void playClick() {
-        MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        MinecraftClient.getInstance().getSoundManager()
+            .play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 }

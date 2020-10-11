@@ -1,9 +1,12 @@
 package com.kqp.inventorytabs.tabs.provider;
 
+import com.kqp.inventorytabs.init.InventoryTabs;
 import com.kqp.inventorytabs.tabs.tab.SimpleBlockTab;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -17,7 +20,7 @@ import java.util.stream.Collectors;
  * Provides tabs for simple blocks.
  */
 public class SimpleBlockTabProvider extends BlockTabProvider {
-    private Set<Identifier> blockIds = new HashSet();
+    private final Set<Identifier> blockIds = new HashSet();
 
     public SimpleBlockTabProvider() {
     }

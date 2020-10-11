@@ -1,7 +1,12 @@
 package com.kqp.inventorytabs.api;
 
 import com.kqp.inventorytabs.init.InventoryTabs;
-import com.kqp.inventorytabs.tabs.provider.*;
+import com.kqp.inventorytabs.tabs.provider.ChestTabProvider;
+import com.kqp.inventorytabs.tabs.provider.EnderChestTabProvider;
+import com.kqp.inventorytabs.tabs.provider.PlayerInventoryTabProvider;
+import com.kqp.inventorytabs.tabs.provider.ShulkerBoxTabProvider;
+import com.kqp.inventorytabs.tabs.provider.SimpleBlockTabProvider;
+import com.kqp.inventorytabs.tabs.provider.TabProvider;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -19,17 +24,25 @@ import java.util.Map;
 public class TabProviderRegistry {
     private static final Map<Identifier, TabProvider> TAB_PROVIDERS = new HashMap();
 
-    public static final PlayerInventoryTabProvider PLAYER_INVENTORY_TAB_PROVIDER = (PlayerInventoryTabProvider) register(InventoryTabs.id("player_inventory_tab_provider"), new PlayerInventoryTabProvider());
-    public static final SimpleBlockTabProvider SIMPLE_BLOCK_TAB_PROVIDER = (SimpleBlockTabProvider) register(InventoryTabs.id("simple_block_tab_provider"), new SimpleBlockTabProvider());
-    public static final ChestTabProvider CHEST_TAB_PROVIDER = (ChestTabProvider) register(InventoryTabs.id("chest_tab_provider"), new ChestTabProvider());
-    public static final EnderChestTabProvider ENDER_CHEST_TAB_PROVIDER = (EnderChestTabProvider) register(InventoryTabs.id("ender_chest_tab_provider"), new EnderChestTabProvider());
-    public static final ShulkerBoxTabProvider SHULKER_BOX_TAB_PROVIDER = (ShulkerBoxTabProvider) register(InventoryTabs.id("shulker_box_tab_provider"), new ShulkerBoxTabProvider());
+    public static final PlayerInventoryTabProvider PLAYER_INVENTORY_TAB_PROVIDER =
+        (PlayerInventoryTabProvider) register(InventoryTabs.id("player_inventory_tab_provider"),
+            new PlayerInventoryTabProvider());
+    public static final SimpleBlockTabProvider SIMPLE_BLOCK_TAB_PROVIDER =
+        (SimpleBlockTabProvider) register(InventoryTabs.id("simple_block_tab_provider"),
+            new SimpleBlockTabProvider());
+    public static final ChestTabProvider CHEST_TAB_PROVIDER =
+        (ChestTabProvider) register(InventoryTabs.id("chest_tab_provider"), new ChestTabProvider());
+    public static final EnderChestTabProvider ENDER_CHEST_TAB_PROVIDER =
+        (EnderChestTabProvider) register(InventoryTabs.id("ender_chest_tab_provider"),
+            new EnderChestTabProvider());
+    public static final ShulkerBoxTabProvider SHULKER_BOX_TAB_PROVIDER =
+        (ShulkerBoxTabProvider) register(InventoryTabs.id("shulker_box_tab_provider"),
+            new ShulkerBoxTabProvider());
 
     public static void init() {
         addVanillaSimpleBlockTabProviders();
         addVanillaChestTabProviders();
         addModSimpleBlockTabProviders();
-        addModChestTabProviders();
     }
 
     private static void addVanillaSimpleBlockTabProviders() {
@@ -127,23 +140,6 @@ public class TabProviderRegistry {
         registerSimpleBlock(new Identifier("better-nether", "basalt_furnace"));
         registerSimpleBlock(new Identifier("better-nether", "blackstone_furnace"));
         registerSimpleBlock(new Identifier("better-nether", "netherrack_furnace"));
-    }
-
-    private static void addModChestTabProviders() {
-        registerChest(new Identifier("expandedstorage", "wood_chest"));
-        registerChest(new Identifier("expandedstorage", "pumpkin_chest"));
-        registerChest(new Identifier("expandedstorage", "old_wood_chest"));
-        registerChest(new Identifier("expandedstorage", "old_obsidian_chest"));
-        registerChest(new Identifier("expandedstorage", "old_netherite_chest"));
-        registerChest(new Identifier("expandedstorage", "old_iron_chest"));
-        registerChest(new Identifier("expandedstorage", "old_gold_chest"));
-        registerChest(new Identifier("expandedstorage", "old_diamond_chest"));
-        registerChest(new Identifier("expandedstorage", "obsidian_chest"));
-        registerChest(new Identifier("expandedstorage", "netherite_chest"));
-        registerChest(new Identifier("expandedstorage", "iron_chest"));
-        registerChest(new Identifier("expandedstorage", "gold_chest"));
-        registerChest(new Identifier("expandedstorage", "diamond_chest"));
-        registerChest(new Identifier("expandedstorage", "christmas_chest"));
     }
 
     /**

@@ -30,32 +30,32 @@ public class ShulkerBoxTabProvider extends BlockTabProvider {
         Set<SimpleBlockTab> tabsToRemove = new HashSet();
 
         List<SimpleBlockTab> shulkerTabs = tabs.stream()
-                .filter(tab -> tab instanceof SimpleBlockTab)
-                .map(tab -> (SimpleBlockTab) tab)
-                .filter(tab -> Registry.BLOCK.get(tab.blockId) instanceof ShulkerBoxBlock)
-                .collect(Collectors.toList());
+            .filter(tab -> tab instanceof SimpleBlockTab)
+            .map(tab -> (SimpleBlockTab) tab)
+            .filter(tab -> Registry.BLOCK.get(tab.blockId) instanceof ShulkerBoxBlock)
+            .collect(Collectors.toList());
 
         World world = player.world;
 
         // Add any chests that are blocked
         shulkerTabs.stream()
-                .filter(tab -> {
-                    BlockEntity blockEntity = player.world.getBlockEntity(tab.blockPos);
+            .filter(tab -> {
+                BlockEntity blockEntity = player.world.getBlockEntity(tab.blockPos);
 
-                    if (blockEntity instanceof ShulkerBoxBlockEntity) {
-                        BlockState blockState = player.world.getBlockState(tab.blockPos);
-                        Direction direction = blockState.get(ShulkerBoxBlock.FACING);
+                if (blockEntity instanceof ShulkerBoxBlockEntity) {
+                    BlockState blockState = player.world.getBlockState(tab.blockPos);
+                    Direction direction = blockState.get(ShulkerBoxBlock.FACING);
 
-                        if (((ShulkerBoxBlockEntity) blockEntity).getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
-                            if (!player.world.doesNotCollide(ShulkerLidCollisions.getLidCollisionBox(tab.blockPos, direction))) {
-                                return true;
-                            }
-                        }
+                    if (((ShulkerBoxBlockEntity) blockEntity).getAnimationStage() ==
+                        ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
+                        return !player.world.isSpaceEmpty(
+                            ShulkerLidCollisions.getLidCollisionBox(tab.blockPos, direction));
                     }
+                }
 
-                    return false;
-                })
-                .forEach(tabsToRemove::add);
+                return false;
+            })
+            .forEach(tabsToRemove::add);
 
         tabs.removeAll(tabsToRemove);
     }

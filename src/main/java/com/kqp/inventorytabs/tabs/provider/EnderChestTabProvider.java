@@ -26,17 +26,17 @@ public class EnderChestTabProvider extends BlockTabProvider {
         Set<ChestTab> tabsToRemove = new HashSet();
 
         List<ChestTab> chestTabs = tabs.stream()
-                .filter(tab -> tab instanceof ChestTab)
-                .map(tab -> (ChestTab) tab)
-                .filter(tab -> tab.blockId == Registry.BLOCK.getId(Blocks.ENDER_CHEST))
-                .collect(Collectors.toList());
+            .filter(tab -> tab instanceof ChestTab)
+            .map(tab -> (ChestTab) tab)
+            .filter(tab -> tab.blockId == Registry.BLOCK.getId(Blocks.ENDER_CHEST))
+            .collect(Collectors.toList());
 
         World world = player.world;
 
         // Add any chests that are blocked
         chestTabs.stream()
-                .filter(tab -> ChestBlock.isChestBlocked(world, tab.blockPos))
-                .forEach(tabsToRemove::add);
+            .filter(tab -> ChestBlock.isChestBlocked(world, tab.blockPos))
+            .forEach(tabsToRemove::add);
 
         boolean found = false;
 

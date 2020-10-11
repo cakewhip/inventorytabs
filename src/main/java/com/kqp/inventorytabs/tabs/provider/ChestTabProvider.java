@@ -30,24 +30,25 @@ public class ChestTabProvider extends BlockTabProvider {
         Set<ChestTab> tabsToRemove = new HashSet();
 
         List<ChestTab> chestTabs = tabs.stream()
-                .filter(tab -> tab instanceof ChestTab)
-                .map(tab -> (ChestTab) tab)
-                .filter(tab -> chestBlocks.contains(tab.blockId))
-                .collect(Collectors.toList());
+            .filter(tab -> tab instanceof ChestTab)
+            .map(tab -> (ChestTab) tab)
+            .filter(tab -> chestBlocks.contains(tab.blockId))
+            .collect(Collectors.toList());
 
         World world = player.world;
 
         // Add any chests that are blocked
         chestTabs.stream()
-                .filter(tab -> ChestBlock.isChestBlocked(world, tab.blockPos))
-                .forEach(tabsToRemove::add);
+            .filter(tab -> ChestBlock.isChestBlocked(world, tab.blockPos))
+            .forEach(tabsToRemove::add);
 
         for (int i = 0; i < chestTabs.size(); i++) {
             ChestTab tab = chestTabs.get(i);
 
             if (!tabsToRemove.contains(tab)) {
                 if (ChestUtil.isDouble(world, tab.blockPos)) {
-                    tabsToRemove.add(new ChestTab(tab.blockId, ChestUtil.getOtherChestBlockPos(world, tab.blockPos)));
+                    tabsToRemove.add(new ChestTab(tab.blockId,
+                        ChestUtil.getOtherChestBlockPos(world, tab.blockPos)));
                 }
             }
         }

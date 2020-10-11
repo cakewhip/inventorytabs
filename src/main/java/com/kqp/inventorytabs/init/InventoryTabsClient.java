@@ -12,12 +12,13 @@ import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class InventoryTabsClient implements ClientModInitializer {
-    public static final KeyBinding NEXT_TAB_KEY_BIND = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+    public static final KeyBinding NEXT_TAB_KEY_BIND =
+        KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "inventorytabs.key.next_tab",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_TAB,
             "key.categories.inventory"
-    ));
+        ));
 
     public static boolean serverDoSightCheckFlag = true;
 

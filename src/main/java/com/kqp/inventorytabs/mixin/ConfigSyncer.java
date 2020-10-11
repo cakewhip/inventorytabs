@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerManager.class)
 public class ConfigSyncer {
     @Inject(method = "onPlayerConnect", at = @At("RETURN"))
-    public void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo callbackInfo) {
+    public void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player,
+                                CallbackInfo callbackInfo) {
         SyncClientConfigS2C.sendToPlayer(player, InventoryTabs.getConfig().doSightChecksFlag);
     }
 }

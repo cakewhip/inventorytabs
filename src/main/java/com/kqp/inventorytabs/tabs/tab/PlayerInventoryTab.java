@@ -2,11 +2,10 @@ package com.kqp.inventorytabs.tabs.tab;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.StringRenderable;
+import net.minecraft.text.Text;
 
 /**
  * Tab for the player's inventory.
@@ -29,7 +28,7 @@ public class PlayerInventoryTab implements Tab {
     }
 
     @Override
-    public StringRenderable getHoverText() {
+    public Text getHoverText() {
         return new LiteralText("Inventory");
     }
 

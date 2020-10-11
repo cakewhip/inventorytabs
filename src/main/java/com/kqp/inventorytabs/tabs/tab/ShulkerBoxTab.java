@@ -1,6 +1,5 @@
 package com.kqp.inventorytabs.tabs.tab;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -30,8 +29,10 @@ public class ShulkerBoxTab extends SimpleBlockTab {
             BlockState blockState = player.world.getBlockState(blockPos);
             Direction direction = blockState.get(ShulkerBoxBlock.FACING);
 
-            if (((ShulkerBoxBlockEntity) blockEntity).getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
-                if (!player.world.doesNotCollide(ShulkerLidCollisions.getLidCollisionBox(blockPos, direction))) {
+            if (((ShulkerBoxBlockEntity) blockEntity).getAnimationStage() ==
+                ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
+                if (!player.world
+                    .isSpaceEmpty(ShulkerLidCollisions.getLidCollisionBox(blockPos, direction))) {
                     return true;
                 }
             }

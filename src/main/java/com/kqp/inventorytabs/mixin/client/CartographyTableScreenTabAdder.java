@@ -5,7 +5,7 @@ import com.kqp.inventorytabs.tabs.TabManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.*;
+import net.minecraft.client.gui.screen.ingame.CartographyTableScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,14 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CartographyTableScreen.class)
 public class CartographyTableScreenTabAdder {
     @Inject(
-            method = "drawBackground",
-            at = @At(
-                    value = "INVOKE",
-                    shift = At.Shift.AFTER,
-                    target = "Lnet/minecraft/client/gui/screen/ingame/CartographyTableScreen;renderBackground(Lnet/minecraft/client/util/math/MatrixStack;)V"
-            )
+        method = "drawBackground",
+        at = @At(
+            value = "INVOKE",
+            shift = At.Shift.AFTER,
+            target = "Lnet/minecraft/client/gui/screen/ingame/CartographyTableScreen;renderBackground(Lnet/minecraft/client/util/math/MatrixStack;)V"
+        )
     )
-    protected void drawBackgroundTabs(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo callbackInfo) {
+    protected void drawBackgroundTabs(MatrixStack matrices, float delta, int mouseX, int mouseY,
+                                      CallbackInfo callbackInfo) {
         MinecraftClient client = MinecraftClient.getInstance();
         TabManager tabManager = ((TabManagerContainer) client).getTabManager();
 

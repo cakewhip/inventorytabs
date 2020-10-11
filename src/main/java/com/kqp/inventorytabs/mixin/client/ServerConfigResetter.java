@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClient.class)
 public class ServerConfigResetter {
     @Inject(
-            method = "disconnect",
-            at = @At("TAIL")
+        method = "disconnect",
+        at = @At("TAIL")
     )
     private void resetServerConfig(CallbackInfo callbackInfo) {
         InventoryTabsServerConfig.reset();

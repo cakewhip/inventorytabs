@@ -8,10 +8,24 @@ import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.kqp.inventorytabs.util.ChestUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.*;
+import net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen;
+import net.minecraft.client.gui.screen.ingame.AnvilScreen;
+import net.minecraft.client.gui.screen.ingame.BrewingStandScreen;
+import net.minecraft.client.gui.screen.ingame.CartographyTableScreen;
+import net.minecraft.client.gui.screen.ingame.CraftingScreen;
+import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
+import net.minecraft.client.gui.screen.ingame.Generic3x3ContainerScreen;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+import net.minecraft.client.gui.screen.ingame.GrindstoneScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.screen.ingame.HopperScreen;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.client.gui.screen.ingame.LoomScreen;
+import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
+import net.minecraft.client.gui.screen.ingame.SmithingScreen;
+import net.minecraft.client.gui.screen.ingame.StonecutterScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -29,8 +43,8 @@ import java.util.Set;
 @Mixin(HandledScreen.class)
 public class VanillaScreenTabAdder implements TabRenderingHints {
     @Inject(
-            method = "init",
-            at = @At("RETURN")
+        method = "init",
+        at = @At("RETURN")
     )
     private void initTabRenderer(CallbackInfo callbackInfo) {
         if (screenSupported()) {
@@ -58,7 +72,8 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
                     World world = MinecraftClient.getInstance().player.world;
                     if (world.getBlockState(blockPos).getBlock() instanceof ChestBlock) {
                         if (ChestUtil.isDouble(world, blockPos)) {
-                            matchingBlockPositions.add(ChestUtil.getOtherChestBlockPos(world, blockPos));
+                            matchingBlockPositions
+                                .add(ChestUtil.getOtherChestBlockPos(world, blockPos));
                         }
                     }
 
@@ -82,10 +97,11 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
     }
 
     @Inject(
-            method = "render",
-            at = @At("HEAD")
+        method = "render",
+        at = @At("HEAD")
     )
-    protected void drawBackgroundTabs(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo callbackInfo) {
+    protected void drawBackgroundTabs(MatrixStack matrices, int mouseX, int mouseY, float delta,
+                                      CallbackInfo callbackInfo) {
         if (screenSupported()) {
             if (!screenDoesDumbBlock()) {
                 MinecraftClient client = MinecraftClient.getInstance();
@@ -97,10 +113,11 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
     }
 
     @Inject(
-            method = "render",
-            at = @At("TAIL")
+        method = "render",
+        at = @At("TAIL")
     )
-    protected void drawForegroundTabs(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo callbackInfo) {
+    protected void drawForegroundTabs(MatrixStack matrices, int mouseX, int mouseY, float delta,
+                                      CallbackInfo callbackInfo) {
         if (screenSupported()) {
             MinecraftClient client = MinecraftClient.getInstance();
             TabManager tabManager = ((TabManagerContainer) client).getTabManager();
@@ -111,13 +128,15 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
     }
 
     @Inject(
-            method = "mouseClicked",
-            at = @At("HEAD"),
-            cancellable = true
+        method = "mouseClicked",
+        at = @At("HEAD"),
+        cancellable = true
     )
-    public void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> callbackInfo) {
+    public void mouseClicked(double mouseX, double mouseY, int button,
+                             CallbackInfoReturnable<Boolean> callbackInfo) {
         if (screenSupported()) {
-            TabManager tabManager = ((TabManagerContainer) MinecraftClient.getInstance()).getTabManager();
+            TabManager tabManager =
+                ((TabManagerContainer) MinecraftClient.getInstance()).getTabManager();
 
             if (tabManager.mouseClicked(mouseX, mouseY, button)) {
                 callbackInfo.setReturnValue(true);
@@ -126,13 +145,15 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
     }
 
     @Inject(
-            method = "keyPressed",
-            at = @At("HEAD"),
-            cancellable = true
+        method = "keyPressed",
+        at = @At("HEAD"),
+        cancellable = true
     )
-    public void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> callbackInfo) {
+    public void keyPressed(int keyCode, int scanCode, int modifiers,
+                           CallbackInfoReturnable<Boolean> callbackInfo) {
         if (screenSupported()) {
-            TabManager tabManager = ((TabManagerContainer) MinecraftClient.getInstance()).getTabManager();
+            TabManager tabManager =
+                ((TabManagerContainer) MinecraftClient.getInstance()).getTabManager();
 
             if (tabManager.keyPressed(keyCode, scanCode, modifiers)) {
                 callbackInfo.setReturnValue(true);
@@ -174,34 +195,34 @@ public class VanillaScreenTabAdder implements TabRenderingHints {
         HandledScreen screen = (HandledScreen) (Object) this;
 
         return screen instanceof GenericContainerScreen
-                || screen instanceof InventoryScreen
-                || screen instanceof AbstractFurnaceScreen
-                || screen instanceof AnvilScreen
-                || screen instanceof CraftingScreen
-                || screen instanceof ShulkerBoxScreen
-                || screen instanceof EnchantmentScreen
-                || screen instanceof BrewingStandScreen
-                || screen instanceof SmithingScreen
-                || screen instanceof CartographyTableScreen
-                || screen instanceof LoomScreen
-                || screen instanceof StonecutterScreen
-                || screen instanceof GrindstoneScreen
-                || screen instanceof HopperScreen
-                || screen instanceof Generic3x3ContainerScreen;
+            || screen instanceof InventoryScreen
+            || screen instanceof AbstractFurnaceScreen
+            || screen instanceof AnvilScreen
+            || screen instanceof CraftingScreen
+            || screen instanceof ShulkerBoxScreen
+            || screen instanceof EnchantmentScreen
+            || screen instanceof BrewingStandScreen
+            || screen instanceof SmithingScreen
+            || screen instanceof CartographyTableScreen
+            || screen instanceof LoomScreen
+            || screen instanceof StonecutterScreen
+            || screen instanceof GrindstoneScreen
+            || screen instanceof HopperScreen
+            || screen instanceof Generic3x3ContainerScreen;
     }
 
     private boolean screenDoesDumbBlock() {
         HandledScreen screen = (HandledScreen) (Object) this;
 
         return screen instanceof CartographyTableScreen
-                || screen instanceof LoomScreen
-                || screen instanceof StonecutterScreen;
+            || screen instanceof LoomScreen
+            || screen instanceof StonecutterScreen;
     }
 
     private boolean screenNeedsOffset() {
         HandledScreen screen = (HandledScreen) (Object) this;
 
         return screen instanceof ShulkerBoxScreen
-                || screen instanceof GenericContainerScreen;
+            || screen instanceof GenericContainerScreen;
     }
 }

@@ -16,14 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(StonecutterScreen.class)
 public class StonecutterScreenTabAdder {
     @Inject(
-            method = "drawBackground",
-            at = @At(
-                    value = "INVOKE",
-                    shift = At.Shift.AFTER,
-                    target = "Lnet/minecraft/client/gui/screen/ingame/StonecutterScreen;renderBackground(Lnet/minecraft/client/util/math/MatrixStack;)V"
-            )
+        method = "drawBackground",
+        at = @At(
+            value = "INVOKE",
+            shift = At.Shift.AFTER,
+            target = "Lnet/minecraft/client/gui/screen/ingame/StonecutterScreen;renderBackground(Lnet/minecraft/client/util/math/MatrixStack;)V"
+        )
     )
-    protected void drawBackgroundTabs(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo callbackInfo) {
+    protected void drawBackgroundTabs(MatrixStack matrices, float delta, int mouseX, int mouseY,
+                                      CallbackInfo callbackInfo) {
         MinecraftClient client = MinecraftClient.getInstance();
         TabManager tabManager = ((TabManagerContainer) client).getTabManager();
 

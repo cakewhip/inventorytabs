@@ -1,6 +1,5 @@
 package com.kqp.inventorytabs.util;
 
-import com.kqp.inventorytabs.tabs.tab.ChestTab;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.enums.ChestType;
