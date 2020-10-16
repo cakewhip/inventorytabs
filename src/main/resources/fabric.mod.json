@@ -10,6 +10,7 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/inventory-tabs",
+    "sources": "https://github.com/cakewhip/inventorytabs/"
     "issues": "https://github.com/cakewhip/inventorytabs/issues"
   },
 
