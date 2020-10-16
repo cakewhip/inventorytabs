@@ -4,16 +4,16 @@
   "version": "${version}",
 
   "name": "Inventory Tabs",
-  "description": "",
+  "description": "Adds tabs to your inventory that lead to nearby blocks.",
   "authors": [
     "KQP"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": ""
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/inventory-tabs",
+    "issues": "https://github.com/cakewhip/inventorytabs/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/inventorytabs/icon.png",
 
   "environment": "*",
