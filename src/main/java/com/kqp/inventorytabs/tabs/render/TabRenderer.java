@@ -2,7 +2,6 @@ package com.kqp.inventorytabs.tabs.render;
 
 import com.kqp.inventorytabs.init.InventoryTabs;
 import com.kqp.inventorytabs.mixin.client.accessor.HandledScreenAccessor;
-import com.kqp.inventorytabs.mixin.client.accessor.ScreenAccessor;
 import com.kqp.inventorytabs.tabs.TabManager;
 import com.kqp.inventorytabs.tabs.tab.Tab;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -11,9 +10,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import java.awt.*;
@@ -177,15 +174,7 @@ public class TabRenderer {
             tabRenderInfo.texH
         );
 
-        ItemRenderer itemRenderer = ((ScreenAccessor) currentScreen).getItemRenderer();
-        TextRenderer textRenderer = ((ScreenAccessor) currentScreen).getTextRenderer();
-        itemRenderer.zOffset = 100.0F;
-        RenderSystem.enableRescaleNormal();
-        ItemStack itemStack = tabRenderInfo.tabReference.getItemStack();
-        itemRenderer.renderInGuiWithOverrides(itemStack, tabRenderInfo.itemX, tabRenderInfo.itemY);
-        itemRenderer.renderGuiItemOverlay(textRenderer, itemStack, tabRenderInfo.itemX,
-            tabRenderInfo.itemY);
-        itemRenderer.zOffset = 0.0F;
+        tabRenderInfo.tabReference.renderTabIcon(matrices, tabRenderInfo, currentScreen);
     }
 
     public void renderHoverTooltips(MatrixStack matrices, double mouseX, double mouseY) {

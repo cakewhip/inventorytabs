@@ -25,11 +25,14 @@ import java.util.Objects;
 /**
  * Generic tab for blocks.
  */
-public class SimpleBlockTab implements Tab {
+public class SimpleBlockTab extends Tab {
     public final Identifier blockId;
     public final BlockPos blockPos;
 
     public SimpleBlockTab(Identifier blockId, BlockPos blockPos) {
+        super(new ItemStack(
+                MinecraftClient.getInstance().player.world.getBlockState(blockPos).getBlock()
+        ));
         this.blockId = blockId;
         this.blockPos = blockPos;
     }
@@ -86,12 +89,6 @@ public class SimpleBlockTab implements Tab {
 
         return getBlockVec3d().subtract(playerHead).lengthSquared() >
             BlockTabProvider.SEARCH_DISTANCE * BlockTabProvider.SEARCH_DISTANCE;
-    }
-
-    @Override
-    public ItemStack getItemStack() {
-        return new ItemStack(
-            MinecraftClient.getInstance().player.world.getBlockState(blockPos).getBlock());
     }
 
     @Override
