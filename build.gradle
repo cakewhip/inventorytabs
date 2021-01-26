@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.7-SNAPSHOT'
+	id 'fabric-loom' version '0.6-SNAPSHOT'
 	id 'maven-publish'
 	id 'com.wynprice.cursemaven' version '2.1.5'
 }
@@ -12,10 +12,14 @@ version = "${project.mod_version}-${project.minecraft_version}"
 group = project.maven_group
 
 repositories {
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
 	maven {
 		url "http://server.bbkr.space:8081/artifactory/libs-release"
 	}
 }
+//
 
 dependencies {
 	//to change the versions see the gradle.properties file
@@ -83,4 +87,5 @@ publishing {
 		// uncomment to publish to the local maven
 		mavenLocal()
 	}
+}
 }
